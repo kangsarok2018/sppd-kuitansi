@@ -113,7 +113,7 @@
 </head>
 <body class="min-h-screen flex flex-col bg-slate-100">
 
-  <header class="bg-gradient-to-r from-blue-950 via-blue-900 to-indigo-900 text-white shadow-md sticky top-0 z-40">
+  <header class="bg-gradient-to-r from-blue-950 via-blue-900 to-indigo-900 text-white shadow-md sticky top-0 z-40 no-print">
     <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
         <div class="w-10 h-10 bg-white/10 rounded-xl p-1 flex items-center justify-center shadow-sm border border-white/20">
@@ -148,7 +148,7 @@
           Pratinjau Dokumen (5 Jenis)
         </button>
         <button onclick="gantiTabNav('master')" id="nav-btn-master" class="px-4 py-2 text-xs font-bold rounded-lg transition text-blue-200 hover:bg-blue-900/60 flex items-center gap-2 whitespace-nowrap">
-          Master Database
+          Master Database & User
         </button>
       </div>
     </div>
@@ -156,6 +156,7 @@
 
   <main class="max-w-7xl mx-auto p-4 sm:p-6 w-full flex-1">
 
+    <!-- DASHBOARD TAB -->
     <div id="section-dashboard" class="space-y-6">
       <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white p-6 sm:p-8 rounded-2xl shadow-lg relative overflow-hidden">
         <div class="relative z-10 max-w-2xl">
@@ -190,6 +191,7 @@
       </div>
     </div>
 
+    <!-- FORMULIR & EDITOR TAB -->
     <div id="section-form" class="space-y-6 hidden">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-4xl mx-auto">
         <div class="flex items-center justify-between border-b pb-4 mb-6">
@@ -206,9 +208,13 @@
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tahun</label><input type="text" id="f_nomorTahun" class="form-input text-center text-xs" oninput="ubahData('nomorTahun', this.value)"></div>
             </div>
             <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Dasar Pelaksanaan (DPA / SK)</label><textarea id="f_dasar" rows="3" class="form-input text-xs" oninput="ubahData('dasar', this.value)"></textarea></div>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+            <h3 class="text-xs font-bold text-blue-900 uppercase">2. Poin Instruksi (Untuk)</h3>
             <div>
               <div class="flex items-center justify-between mb-1">
-                <label class="block text-[11px] font-semibold text-slate-600">Poin Instruksi (Untuk)</label>
+                <label class="block text-[11px] font-semibold text-slate-600">Daftar Poin Instruksi</label>
                 <button type="button" onclick="tambahInstruksiForm()" class="text-[10px] bg-blue-600 text-white font-bold px-2 py-0.5 rounded shadow-sm hover:bg-blue-700 transition">+ Poin</button>
               </div>
               <div id="form-instruksi-list" class="space-y-2"></div>
@@ -216,17 +222,14 @@
           </div>
 
           <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-            <h3 class="text-xs font-bold text-blue-900 uppercase">2. Pegawai yang Melaksanakan Perjalanan Dinas</h3>
+            <h3 class="text-xs font-bold text-blue-900 uppercase">3. Pegawai yang Melaksanakan Perjalanan Dinas</h3>
             <div class="flex justify-between items-center"><span class="text-[11px] text-slate-500">Pilih dari Master Pegawai Cloud</span><button type="button" onclick="tambahPegawai()" class="text-[10px] bg-emerald-600 text-white font-bold px-2.5 py-1 rounded shadow-sm hover:bg-emerald-700 transition">+ Tambah Pegawai</button></div>
             <div id="form-pegawai-list" class="space-y-3"></div>
           </div>
 
           <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-            <h3 class="text-xs font-bold text-blue-900 uppercase">3. Detail Waktu & Tujuan (SPD)</h3>
+            <h3 class="text-xs font-bold text-blue-900 uppercase">4. Detail Waktu & Tujuan (SPD)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Pejabat Pemberi Perintah</label><input type="text" id="f_spdPejabatPemberi" class="form-input text-xs" oninput="ubahDataSpd('pejabatPemberi', this.value)"></div>
-              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tempat Berangkat</label><input type="text" id="f_spdTempatBerangkat" class="form-input text-xs" oninput="ubahDataSpd('tempatBerangkat', this.value)"></div>
-              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tempat Tujuan</label><input type="text" id="f_spdTempatTujuan" class="form-input text-xs font-medium bg-white" oninput="ubahDataSpd('tempatTujuan', this.value)"></div>
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Lama Perjalanan (Contoh: 1 (Satu) Hari)</label><input type="text" id="f_spdLamaHari" class="form-input text-xs" oninput="ubahDataSpd('lamaHari', this.value); hitungTanggalKembaliOtomatis();"></div>
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tanggal Berangkat</label><input type="text" id="f_spdTglBerangkat" class="form-input text-xs font-medium bg-emerald-50/50" oninput="ubahDataSpd('tglBerangkat', this.value); hitungTanggalKembaliOtomatis();"></div>
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tanggal Harus Kembali</label><input type="text" id="f_spdTglKembali" class="form-input text-xs" oninput="ubahDataSpd('tglKembali', this.value)"></div>
@@ -238,13 +241,19 @@
           </div>
 
           <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-            <h3 class="text-xs font-bold text-blue-900 uppercase">4. Penandatangan & Bendahara</h3>
+            <h3 class="text-xs font-bold text-blue-900 uppercase">5. Tanggal Kuitansi / TBP</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Nomor TBP / Kuitansi</label><input type="text" id="f_tbpNomor" class="form-input text-xs" oninput="ubahDataTbp('nomor', this.value)"></div>
+              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tanggal Kuitansi / TBP</label><input type="text" id="f_tbpTanggal" class="form-input text-xs font-medium bg-emerald-50/50" oninput="ubahDataTbp('tanggal', this.value)"></div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
+            <h3 class="text-xs font-bold text-blue-900 uppercase">6. Penandatangan & Bendahara</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div><label class="block text-[11px] font-bold text-slate-700 mb-1">Pilih Pejabat Penandatangan</label><select id="f_pilihPejabat" onchange="pilihPejabatOtomatis(this.value)" class="form-input text-xs font-semibold bg-white cursor-pointer"><option value="">Pengguna Anggaran (Hj. SITI AMINAH, MM)</option><optgroup id="optgroup-pejabat-firebase" label="Pejabat Lain"></optgroup></select></div>
               <div><label class="block text-[11px] font-bold text-slate-700 mb-1">Pilih PPTK (Punggung SPD)</label><select id="f_pilihPptk" onchange="pilihPptkDariDropdown(this.value)" class="form-input text-xs font-semibold bg-white cursor-pointer"><option value="">-- Pilih PPTK --</option></select></div>
               <div><label class="block text-[11px] font-bold text-slate-700 mb-1">Pilih Bendahara Pengeluaran</label><select id="f_pilihBendahara" onchange="pilihBendaharaDropdown(this.value)" class="form-input text-xs font-semibold bg-white cursor-pointer"><option value="NURASIAH, A.Md">NURASIAH, A.Md (NIP. 19750505 199903 2 007)</option></select></div>
-              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Nomor TBP / Kuitansi</label><input type="text" id="f_tbpNomor" class="form-input text-xs" oninput="ubahDataTbp('nomor', this.value)"></div>
-              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tanggal Kuitansi / TBP</label><input type="text" id="f_tbpTanggal" class="form-input text-xs font-medium bg-emerald-50/50" oninput="ubahDataTbp('tanggal', this.value)"></div>
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Dikeluarkan di</label><input type="text" id="f_ttdTempat" class="form-input text-xs" oninput="ubahData('ttdTempat', this.value)"></div>
               <div class="sm:col-span-2"><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tanggal Penandatanganan (Surat Tugas & Lainnya)</label><input type="text" id="f_ttdTanggal" class="form-input text-xs" oninput="ubahData('ttdTanggal', this.value)"></div>
             </div>
@@ -253,6 +262,7 @@
       </div>
     </div>
 
+    <!-- PREVIEW TAB -->
     <div id="section-preview" class="space-y-4 hidden">
       <div class="bg-white p-3 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 shadow-sm no-print">
         <div class="flex items-center gap-2 flex-wrap">
@@ -364,13 +374,13 @@
                     </tr>
                     <tr style="white-space: nowrap;">
                       <td style="font-weight: bold; font-size: 9.5pt;">Unit Organisasi</td>
-                      <td style="font-weight: bold; font-size: 9.5pt;">:</td>
+                      <td style="width: 14px; font-weight: bold; font-size: 9.5pt;">:</td>
                       <td style="font-size: 9.5pt;">5-02.0.00.0.00.04</td>
                       <td style="font-size: 9.5pt; text-transform: uppercase;">BADAN PENGELOLA PAJAK DAN RETRIBUSI DAERAH</td>
                     </tr>
                     <tr style="white-space: nowrap;">
                       <td style="font-weight: bold; font-size: 9.5pt;">Sub Unit Organisasi</td>
-                      <td style="font-weight: bold; font-size: 9.5pt;">:</td>
+                      <td style="width: 14px; font-weight: bold; font-size: 9.5pt;">:</td>
                       <td style="font-size: 9.5pt;">5-02.0.00.0.00.04.01</td>
                       <td style="font-size: 9.5pt; text-transform: uppercase;">BADAN PENGELOLA PAJAK DAN RETRIBUSI DAERAH</td>
                     </tr>
@@ -532,25 +542,59 @@
       </div>
     </div>
 
-    <!-- 4. MASTER DATABASE -->
+    <!-- MASTER DATABASE & USER TAB -->
     <div id="section-master" class="space-y-6 hidden">
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-4xl mx-auto">
-        <div class="flex items-center justify-between border-b pb-4 mb-4">
-          <div><h2 class="text-base font-bold text-slate-900">Manajemen Database Cloud Firebase</h2><p class="text-xs text-slate-500">URL: <code class="text-blue-700 bg-blue-50 px-1.5 py-0.5 rounded">https://projectsppd-default-rtdb.asia-southeast1.firebasedatabase.app/</code></p></div>
-          <button onclick="sinkronkanKeCloudSemua()" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">Sinkronkan ke Cloud</button>
+        <div class="flex flex-wrap items-center justify-between border-b pb-4 mb-4 gap-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Manajemen Master Database & Pengaturan Pengguna</h2>
+            <p class="text-xs text-slate-500">Kelola Pegawai, Pejabat Penandatangan, dan Akun Pengguna (Username berbasis NIP).</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-700">Role Aktif:</label>
+            <select id="select-user-role" onchange="gantiRoleUser(this.value)" class="form-input text-xs font-semibold bg-white cursor-pointer py-1 px-2">
+              <option value="admin">Administrator (Full Akses)</option>
+              <option value="pegawai">Pegawai / Staf (Read-Only)</option>
+            </select>
+          </div>
         </div>
-        <div class="flex gap-2 mb-4 bg-slate-100 p-1 rounded-xl">
-          <button onclick="gantiSubMaster('pegawai')" id="btn-sub-pegawai" class="flex-1 py-2 rounded-lg bg-blue-900 text-white text-xs font-bold transition">Master Pegawai</button>
-          <button onclick="gantiSubMaster('pejabat')" id="btn-sub-pejabat" class="flex-1 py-2 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition">Master Pejabat</button>
+
+        <div class="flex gap-2 mb-4 bg-slate-100 p-1 rounded-xl overflow-x-auto">
+          <button onclick="gantiSubMaster('pegawai')" id="btn-sub-pegawai" class="flex-1 py-2 px-3 rounded-lg bg-blue-900 text-white text-xs font-bold transition whitespace-nowrap">Master Pegawai</button>
+          <button onclick="gantiSubMaster('pejabat')" id="btn-sub-pejabat" class="flex-1 py-2 px-3 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition whitespace-nowrap">Master Pejabat</button>
+          <button onclick="gantiSubMaster('users')" id="btn-sub-users" class="flex-1 py-2 px-3 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition whitespace-nowrap">Pengaturan Pengguna (Login NIP)</button>
         </div>
+
+        <!-- Master Pegawai Section -->
         <div id="sub-master-pegawai-sec" class="space-y-3">
-          <div class="flex justify-between items-center"><h3 class="text-xs font-bold text-slate-700">Daftar Pegawai / Staf</h3><button onclick="tambahMasterPegawaiModal()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg transition">+ Tambah Pegawai</button></div>
+          <div class="flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-700">Daftar Pegawai / Staf</h3>
+            <button id="btn-tambah-pegawai" onclick="bukaModalPegawai()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg transition shadow">+ Tambah Pegawai</button>
+          </div>
           <div id="list-master-pegawai" class="space-y-2"></div>
         </div>
+
+        <!-- Master Pejabat Section -->
         <div id="sub-master-pejabat-sec" class="space-y-3 hidden">
-          <div class="flex justify-between items-center"><h3 class="text-xs font-bold text-slate-700">Daftar Pejabat Penandatangan & PPTK</h3><button onclick="tambahMasterPejabatModal()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg transition">+ Tambah Pejabat</button></div>
+          <div class="flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-700">Daftar Pejabat Penandatangan & PPTK</h3>
+            <button id="btn-tambah-pejabat" onclick="bukaModalPejabat()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg transition shadow">+ Tambah Pejabat</button>
+          </div>
           <div id="list-master-pejabat" class="space-y-2"></div>
         </div>
+
+        <!-- Pengaturan Pengguna (User Management Settings) Section -->
+        <div id="sub-master-users-sec" class="space-y-4 hidden">
+          <div class="flex justify-between items-center">
+            <div>
+              <h3 class="text-xs font-bold text-slate-700">Pengaturan Akun Pengguna (Username = NIP)</h3>
+              <p class="text-[11px] text-slate-500">Konfigurasi akun untuk login sistem menggunakan NIP pegawai.</p>
+            </div>
+            <button onclick="bukaModalUser()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3 py-1.5 rounded-lg transition shadow">+ Tambah Akun User</button>
+          </div>
+          <div id="list-master-users" class="space-y-2"></div>
+        </div>
+
       </div>
     </div>
   </main>
@@ -561,31 +605,120 @@
     </div>
   </footer>
 
+  <!-- MODAL PEGAWAI (CRUD) -->
+  <div id="modal-pegawai" class="hidden fixed inset-0 z-[130] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+      <h3 id="modal-pegawai-title" class="font-bold text-base text-slate-900 border-b pb-2">Tambah / Edit Pegawai</h3>
+      <input type="hidden" id="edit-pegawai-idx" value="-1">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap & Gelar</label>
+        <input type="text" id="input-pegawai-nama" class="form-input text-xs">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">NIP (Digunakan sebagai Username Login)</label>
+        <input type="text" id="input-pegawai-nip" class="form-input text-xs">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Pangkat / Golongan</label>
+        <input type="text" id="input-pegawai-pangkat" class="form-input text-xs">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Jabatan</label>
+        <input type="text" id="input-pegawai-jabatan" class="form-input text-xs">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="tutupModalPegawai()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition">Batal</button>
+        <button onclick="simpanMasterPegawai()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PEJABAT (CRUD) -->
+  <div id="modal-pejabat" class="hidden fixed inset-0 z-[130] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+      <h3 id="modal-pejabat-title" class="font-bold text-base text-slate-900 border-b pb-2">Tambah / Edit Pejabat</h3>
+      <input type="hidden" id="edit-pejabat-idx" value="-1">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Kewenangan (Contoh: An. KEPALA BPPRD)</label>
+        <input type="text" id="input-pejabat-kewenangan" class="form-input text-xs" value="An. KEPALA BPPRD">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Jabatan Pejabat</label>
+        <input type="text" id="input-pejabat-jabatan" class="form-input text-xs">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap & Gelar</label>
+        <input type="text" id="input-pejabat-nama" class="form-input text-xs">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Pangkat / Golongan</label>
+        <input type="text" id="input-pejabat-pangkat" class="form-input text-xs">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">NIP (Username Login)</label>
+        <input type="text" id="input-pejabat-nip" class="form-input text-xs">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="tutupModalPejabat()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition">Batal</button>
+        <button onclick="simpanMasterPejabat()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL USER SETTINGS (CRUD) -->
+  <div id="modal-user" class="hidden fixed inset-0 z-[130] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 space-y-4">
+      <h3 id="modal-user-title" class="font-bold text-base text-slate-900 border-b pb-2">Tambah / Edit Akun Pengguna</h3>
+      <input type="hidden" id="edit-user-idx" value="-1">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Username Login (NIP Tanpa Spasi)</label>
+        <input type="text" id="input-user-username" class="form-input text-xs" placeholder="Masukkan NIP...">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Nama Lengkap</label>
+        <input type="text" id="input-user-nama" class="form-input text-xs">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Role / Hak Akses</label>
+        <select id="input-user-role" class="form-input text-xs bg-white">
+          <option value="admin">Administrator</option>
+          <option value="pegawai">Pegawai / Staf</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Password Sementara</label>
+        <input type="password" id="input-user-pass" class="form-input text-xs" placeholder="••••••••">
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="tutupModalUser()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition">Batal</button>
+        <button onclick="simpanMasterUser()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow">Simpan Akun</button>
+      </div>
+    </div>
+  </div>
+
   <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-xl text-sm items-center gap-3 border border-slate-700 transition-all">
     <span class="text-emerald-400 font-bold">✓</span>
     <span id="toast-text">Notifikasi</span>
   </div>
 
-  <div id="modal-confirm" class="hidden fixed inset-0 z-[120] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity">
-    <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-5 flex flex-col gap-4 transform transition-all scale-95 opacity-0" id="modal-confirm-panel">
-      <h3 class="font-bold text-lg text-slate-800 border-b pb-2">Konfirmasi</h3>
-      <p id="modal-confirm-text" class="text-sm text-slate-600 leading-relaxed">Apakah Anda yakin?</p>
-      <div class="flex justify-end gap-2 mt-2">
-        <button onclick="tutupModalConfirm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition">Batal</button>
-        <button id="modal-confirm-btn" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-sm font-medium transition shadow-sm">Ya</button>
+  <div id="modal-confirm" class="hidden fixed inset-0 z-[140] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity">
+    <div id="modal-confirm-panel" class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6 space-y-4 scale-95 opacity-0 transition-all">
+      <h3 class="font-bold text-base text-slate-900">Konfirmasi Hapus</h3>
+      <p id="modal-confirm-text" class="text-xs text-slate-600">Apakah Anda yakin?</p>
+      <div class="flex justify-end gap-2 pt-2">
+        <button onclick="tutupModalConfirm()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition">Batal</button>
+        <button id="modal-confirm-btn" class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold transition shadow">Hapus</button>
       </div>
     </div>
   </div>
 
   <script>
-    const FIREBASE_BASE = "https://projectsppd-default-rtdb.asia-southeast1.firebasedatabase.app";
-    const ENDPOINT_PEGAWAI = `${FIREBASE_BASE}/pegawai.json`;
-    const ENDPOINT_PEJABAT = `${FIREBASE_BASE}/pejabat.json`;
+    const FIREBASE_BASE_URL = "https://bpprd-merangin-default-rtdb.firebaseio.com/";
+    const ENDPOINT_PEGAWAI = `${FIREBASE_BASE_URL}/master_pegawai.json`;
+    const ENDPOINT_PEJABAT = `${FIREBASE_BASE_URL}/master_pejabat.json`;
+    const ENDPOINT_USERS = `${FIREBASE_BASE_URL}/master_users.json`;
 
-    const BULAN_INDO = [
-      "Januari", "Februari", "Maret", "April", "Mei", "Juni",
-      "Juli", "Agustus", "September", "Oktober", "November", "Desember"
-    ];
+    const BULAN_INDO = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
 
     const dataDefault = {
       nomorPrefix: "094",
@@ -593,41 +726,51 @@
       nomorKode: "ST/ P3-BPPRD",
       nomorTahun: "2026",
       dasar: "Dokumen Pelaksanaan Anggaran Nomor : DPA/A.1/5.02.0.00.0.00.04.0000/001/2026 Tahun Anggaran 2026",
-      ttdTempat: "Bangko",
-      ttdTanggal: "September 2026",
-      ttdAn: "",
-      ttdJabatan: "Pengguna Anggaran",
-      ttdNama: "Hj. SITI AMINAH, MM",
-      ttdPangkat: "Pembina Utama Muda (IV/C)",
-      ttdNip: "19690805 200012 2 002",
-      pegawai: [
-        { nama: "SYORAYA, S.Pd", nip: "19740124 199604 2 001", pangkat: "Penata TK.I (III/D)", jabatan: "Kasubbid Pendataan dan Pendaftaran" },
-        { nama: "RETNO WIJAYANTI, S.Si", nip: "-", pangkat: "-", jabatan: "Pengelola Pendaftaran,Pendataan Pajak dan Retribusi Bidang Pendataan dan Pendaftaran BPPRD Kabupaten Merangin." }
-      ],
       instruksi: [
         "Melaksanakan Kegiatan Pendataan Pajak Daerah di Kecamatan Bangko Kabupaten Merangin.",
         "Tugas tersebut dilaksanakan tanggal 09 September 2026 selama 1 (Satu) Hari.",
         "Surat Perintah Tugas ini diterbitkan untuk dilaksanakan dengan penuh Tanggung Jawab dan penerima tugas segera menyampaikan laporan paling lambat 7 (tujuh) Hari kerja setelah tugas dilaksanakan.",
         "Kepada instansi terkait, dimohon bantuan demi kelancaran pelaksanaan tugas."
       ],
+      pegawai: [
+        {
+          nama: "SYORAYA, S.Pd",
+          nip: "19740124 199604 2 001",
+          pangkat: "Penata TK.I (III/D)",
+          jabatan: "Kasubbid Pendataan dan Pendaftaran"
+        },
+        {
+          nama: "RETNO WIJAYANTI, S.Si",
+          nip: "-",
+          pangkat: "-",
+          jabatan: "Pengelola Pendaftaran,Pendataan Pajak dan Retribusi Bidang Pendataan dan Pendaftaran BPPRD Kabupaten Merangin."
+        }
+      ],
       spd: {
-        pejabatPemberi: "KEPALA BPPRD KAB.MERANGIN",
-        tingkatBiaya: "",
+        lembarKe: "1",
+        kodeNo: "",
+        nomor: "094/...",
+        pejabatPemberi: "KEPALA BADAN PENGELOLA PAJAK DAN RETRIBUSI DAERAH KABUPATEN MERANGIN",
+        tingkatBiaya: "Menurut Peraturan Perjalanan Dinas",
         maksud: "Melaksanakan Kegiatan Pendataan Pajak Daerah di Kecamatan Bangko Kabupaten Merangin.",
-        alatAngkut: "Kendaraan Roda Dua",
+        alatAngkut: "Kendaraan Dinas / Umum",
         tempatBerangkat: "Bangko",
         tempatTujuan: "Kecamatan Bangko",
         lamaHari: "1 (Satu) Hari",
         tglBerangkat: "09 September 2026",
         tglKembali: "09 September 2026",
-        instansiBeban: "BPPRD Kab. Merangin",
-        mataAnggaran: "",
-        lembarKe: "",
-        kodeNo: "",
-        nomor: "",
+        instansiBeban: "BPPRD Kabupaten Merangin",
+        mataAnggaran: "5.1.2.04.01.0003 Belanja Perjalanan Dinas Dalam Kota",
         nominalPerOrang: 150000,
         nominalBbm: 0
       },
+      ttdAn: "",
+      ttdJabatan: "Pengguna Anggaran",
+      ttdNama: "Hj. SITI AMINAH, MM",
+      ttdPangkat: "Pembina Utama Muda (IV/C)",
+      ttdNip: "19690805 200012 2 002",
+      ttdTempat: "Bangko",
+      ttdTanggal: "09 September 2026",
       pptk: {
         nama: "SYORAYA, S.Pd",
         nip: "19740124 199604 2 001",
@@ -636,12 +779,12 @@
         subJabatan: "Selaku Pelaksana Teknis Kegiatan"
       },
       tbp: {
-        nomor: "/TBP-GU-II/4.4.2.1/BPPRD/2026",
+        nomor: "001/TBP-GU-II/4.4.2.1/BPPRD/2026",
         tanggal: "09 September 2026",
         program: "04",
-        programNama: "Program Pengelolaan Pendapatan Daerah",
+        programNama: "Program Pengelola Pendapatan Daerah",
         kegiatan: "2.01",
-        kegiatanNama: "Kegiatan Pengelolaan Pendapatan Daerah",
+        kegiatanNama: "Kegiatan Pengelola Pendapatan Daerah",
         subKegiatan: "05",
         subKegiatanNama: "Pendataan dan Pendaftaran Objek Pajak Daerah",
         bendaharaNama: "NURASIAH, A.Md",
@@ -664,8 +807,8 @@
 
     const masterPegawaiDefault = [
       { nama: "SYORAYA, S.Pd", nip: "19740124 199604 2 001", pangkat: "Penata TK.I (III/D)", jabatan: "Kasubbid Pendataan dan Pendaftaran" },
-      { nama: "RETNO WIJAYANTI, S.Si", nip: "-", pangkat: "-", jabatan: "Pengelola Pendaftaran,Pendataan Pajak dan Retribusi Bidang Pendataan dan Pendaftaran BPPRD Kabupaten Merangin." },
-      { nama: "MUHAMMAD FUAD, S.Si", nip: "-", pangkat: "-", jabatan: "Pengelola Pendaftaran,Pendataan Pajak dan Retribusi Bidang Pendataan dan Pendaftaran BPPRD Kabupaten Merangin" }
+      { nama: "RETNO WIJAYANTI, S.Si", nip: "19850101 201001 2 003", pangkat: "Penata Muda (III/a)", jabatan: "Pengelola Pendaftaran dan Pendataan Pajak" },
+      { nama: "MUHAMMAD FUAD, S.Si", nip: "19900202 201502 1 001", pangkat: "Penata Muda (III/a)", jabatan: "Pengelola Pendapatan Daerah" }
     ];
 
     const masterPejabatDefault = [
@@ -675,8 +818,37 @@
       { kewenangan: "An. KEPALA BPPRD", jabatan: "Kasubbid Pendataan dan Pendaftaran", nama: "SYORAYA, S.Pd", pangkat: "Penata TK.I (III/D)", nip: "19740124 199604 2 001" }
     ];
 
+    const masterUsersDefault = [
+      { username: "196908052000122002", nama: "Administrator Sistem (Hj. Siti Aminah)", role: "admin" },
+      { username: "197401241996042001", nama: "SYORAYA, S.Pd", role: "pegawai" },
+      { username: "198501012010012003", nama: "RETNO WIJAYANTI, S.Si", role: "pegawai" }
+    ];
+
     let masterPegawai = [...masterPegawaiDefault];
     let masterPejabat = [...masterPejabatDefault];
+    let masterUsers = [...masterUsersDefault];
+    let currentUserRole = 'admin';
+
+    function gantiRoleUser(role) {
+      currentUserRole = role;
+      const selectRole = document.getElementById('select-user-role');
+      if (selectRole) selectRole.value = role;
+      
+      const btnPeg = document.getElementById('btn-tambah-pegawai');
+      const btnPej = document.getElementById('btn-tambah-pejabat');
+      if (role === 'pegawai') {
+        if (btnPeg) btnPeg.classList.add('hidden');
+        if (btnPej) btnPej.classList.add('hidden');
+        tampilkanToast("Beralih ke mode Pegawai: Akses read-only.");
+      } else {
+        if (btnPeg) btnPeg.classList.remove('hidden');
+        if (btnPej) btnPej.classList.remove('hidden');
+        tampilkanToast("Beralih ke mode Administrator: Full akses.");
+      }
+      renderListMasterPegawai();
+      renderListMasterPejabat();
+      renderListMasterUsers();
+    }
 
     let confirmCallback = null;
     function bukaModalConfirm(pesan, callback, btnLabel = "Ya", btnClass = "bg-rose-600 hover:bg-rose-700") {
@@ -700,10 +872,13 @@
       setTimeout(() => { modal.classList.add('hidden'); confirmCallback = null; }, 200);
     }
 
-    document.getElementById('modal-confirm-btn').addEventListener('click', () => {
-      if (confirmCallback) confirmCallback();
-      tutupModalConfirm();
-    });
+    const confirmBtnElem = document.getElementById('modal-confirm-btn');
+    if (confirmBtnElem) {
+      confirmBtnElem.addEventListener('click', () => {
+        if (confirmCallback) confirmCallback();
+        tutupModalConfirm();
+      });
+    }
 
     function gantiTabNav(tab) {
       ['dashboard', 'form', 'preview', 'master'].forEach(t => {
@@ -722,24 +897,31 @@
     function gantiSubMaster(sub) {
       const btnP = document.getElementById('btn-sub-pegawai');
       const btnJ = document.getElementById('btn-sub-pejabat');
+      const btnU = document.getElementById('btn-sub-users');
       const secP = document.getElementById('sub-master-pegawai-sec');
       const secJ = document.getElementById('sub-master-pejabat-sec');
+      const secU = document.getElementById('sub-master-users-sec');
+
+      [btnP, btnJ, btnU].forEach(b => { if(b) b.className = "flex-1 py-2 px-3 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition whitespace-nowrap"; });
+      [secP, secJ, secU].forEach(s => { if(s) s.classList.add('hidden'); });
+
       if (sub === 'pegawai') {
-        btnP.className = "flex-1 py-2 rounded-lg bg-blue-900 text-white text-xs font-bold transition";
-        btnJ.className = "flex-1 py-2 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition";
-        secP.classList.remove('hidden');
-        secJ.classList.add('hidden');
-      } else {
-        btnJ.className = "flex-1 py-2 rounded-lg bg-blue-900 text-white text-xs font-bold transition";
-        btnP.className = "flex-1 py-2 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition";
-        secJ.classList.remove('hidden');
-        secP.classList.add('hidden');
+        if(btnP) btnP.className = "flex-1 py-2 px-3 rounded-lg bg-blue-900 text-white text-xs font-bold transition whitespace-nowrap";
+        if(secP) secP.classList.remove('hidden');
+      } else if (sub === 'pejabat') {
+        if(btnJ) btnJ.className = "flex-1 py-2 px-3 rounded-lg bg-blue-900 text-white text-xs font-bold transition whitespace-nowrap";
+        if(secJ) secJ.classList.remove('hidden');
+      } else if (sub === 'users') {
+        if(btnU) btnU.className = "flex-1 py-2 px-3 rounded-lg bg-blue-900 text-white text-xs font-bold transition whitespace-nowrap";
+        if(secU) secU.classList.remove('hidden');
       }
     }
 
     function updateDashboardStats() {
-      document.getElementById('stat-total-pegawai').textContent = `${masterPegawai.length} Pegawai`;
-      document.getElementById('stat-total-pejabat').textContent = `${masterPejabat.length} Pejabat`;
+      const elP = document.getElementById('stat-total-pegawai');
+      const elJ = document.getElementById('stat-total-pejabat');
+      if (elP) elP.textContent = `${masterPegawai.length} Pegawai`;
+      if (elJ) elJ.textContent = `${masterPejabat.length} Pejabat`;
     }
 
     async function muatMasterCloud() {
@@ -754,11 +936,17 @@
           const dataJ = await resJ.json();
           if (Array.isArray(dataJ) && dataJ.length > 0) masterPejabat = dataJ.filter(p => p && p.nama);
         }
+        const resU = await fetch(ENDPOINT_USERS);
+        if (resU.ok) {
+          const dataU = await resU.json();
+          if (Array.isArray(dataU) && dataU.length > 0) masterUsers = dataU.filter(u => u && u.username);
+        }
       } catch (e) {
         console.warn("Menggunakan database lokal default");
       }
       renderListMasterPegawai();
       renderListMasterPejabat();
+      renderListMasterUsers();
       renderFormPegawai();
       renderDropdownPejabatPenandatangan();
       perbaruiPratinjau();
@@ -770,6 +958,7 @@
       try {
         await fetch(ENDPOINT_PEGAWAI, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(masterPegawai) });
         await fetch(ENDPOINT_PEJABAT, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(masterPejabat) });
+        await fetch(ENDPOINT_USERS, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(masterUsers) });
         tampilkanToast("Berhasil disinkronkan ke Firebase Cloud!");
       } catch (e) {
         tampilkanToast("Gagal menyinkronkan data.");
@@ -782,40 +971,22 @@
       c.innerHTML = '';
       masterPegawai.forEach((m, idx) => {
         const div = document.createElement('div');
-        div.className = "p-3 bg-white border border-slate-200 rounded-xl space-y-2";
+        div.className = "p-3 bg-white border border-slate-200 rounded-xl flex items-center justify-between gap-2 shadow-sm";
+        let actionBtns = '';
+        if (currentUserRole === 'admin') {
+          actionBtns = `
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="editMasterPegawai(${idx})" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 text-[11px] font-bold rounded border border-amber-200 transition">Edit</button>
+              <button onclick="konfirmasiHapusPegawai(${idx})" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 text-[11px] font-bold rounded border border-rose-200 transition">Hapus</button>
+            </div>
+          `;
+        }
         div.innerHTML = `
-          <div class="flex justify-between items-center text-xs font-bold text-slate-800">
-            <span>${m.nama} (${m.nip})</span>
-            <span class="text-blue-700 text-[11px]">${m.jabatan}</span>
+          <div class="space-y-0.5">
+            <div class="text-xs font-bold text-slate-900">${m.nama} <span class="font-normal text-slate-500">(NIP: ${m.nip})</span></div>
+            <div class="text-[11px] text-blue-700">${m.pangkat} — ${m.jabatan}</div>
           </div>
-        `;
-        c.appendChild(div);
-      });
-    }
-
-    function renderFormPegawai() {
-      const c = document.getElementById('form-pegawai-list');
-      if (!c) return;
-      c.innerHTML = '';
-      state.pegawai.forEach((p, idx) => {
-        let opts = '<option value="">-- Pilih dari Master --</option>';
-        masterPegawai.forEach((m, mi) => {
-          opts += `<option value="${mi}" ${p.nama === m.nama ? 'selected' : ''}>${m.nama}</option>`;
-        });
-        const div = document.createElement('div');
-        div.className = "p-3 bg-white border border-slate-200 rounded-xl space-y-2 shadow-sm";
-        div.innerHTML = `
-          <div class="flex justify-between items-center text-xs font-bold text-blue-900">
-            <span>Pegawai ${idx + 1}</span>
-            <button type="button" onclick="hapusPegawaiForm(${idx})" class="text-rose-600 hover:text-rose-800">Hapus</button>
-          </div>
-          <select class="form-input text-xs font-semibold" onchange="pilihPegawaiForm(${idx}, this.value)">${opts}</select>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-            <div><label class="block text-[10px] text-slate-500 mb-0.5">Nama</label><input type="text" class="form-input text-xs" value="${p.nama || ''}" oninput="state.pegawai[${idx}].nama = this.value; perbaruiPratinjau();"></div>
-            <div><label class="block text-[10px] text-slate-500 mb-0.5">NIP</label><input type="text" class="form-input text-xs" value="${p.nip || ''}" oninput="state.pegawai[${idx}].nip = this.value; perbaruiPratinjau();"></div>
-            <div><label class="block text-[10px] text-slate-500 mb-0.5">Pangkat / Gol.</label><input type="text" class="form-input text-xs" value="${p.pangkat || ''}" oninput="state.pegawai[${idx}].pangkat = this.value; perbaruiPratinjau();"></div>
-            <div><label class="block text-[10px] text-slate-500 mb-0.5">Jabatan</label><input type="text" class="form-input text-xs" value="${p.jabatan || ''}" oninput="state.pegawai[${idx}].jabatan = this.value; perbaruiPratinjau();"></div>
-          </div>
+          ${actionBtns}
         `;
         c.appendChild(div);
       });
@@ -825,32 +996,276 @@
       const c = document.getElementById('list-master-pejabat');
       if (!c) return;
       c.innerHTML = '';
-      masterPejabat.forEach((m) => {
+      masterPejabat.forEach((m, idx) => {
         const div = document.createElement('div');
-        div.className = "p-3 bg-white border border-slate-200 rounded-xl space-y-1";
+        div.className = "p-3 bg-white border border-slate-200 rounded-xl flex items-center justify-between gap-2 shadow-sm";
+        let actionBtns = '';
+        if (currentUserRole === 'admin') {
+          actionBtns = `
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="editMasterPejabat(${idx})" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 text-[11px] font-bold rounded border border-amber-200 transition">Edit</button>
+              <button onclick="konfirmasiHapusPejabat(${idx})" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 text-[11px] font-bold rounded border border-rose-200 transition">Hapus</button>
+            </div>
+          `;
+        }
         div.innerHTML = `
-          <div class="flex justify-between items-center text-xs font-bold text-slate-800">
-            <span>${m.jabatan}</span>
-            <span class="text-blue-700 text-[11px]">${m.kewenangan}</span>
+          <div class="space-y-0.5">
+            <div class="text-xs font-bold text-slate-900">${m.jabatan} (${m.nama})</div>
+            <div class="text-[11px] text-blue-700">${m.kewenangan} — NIP Login: ${m.nip}</div>
           </div>
-          <div class="text-xs text-slate-600">${m.nama} — NIP. ${m.nip} (${m.pangkat})</div>
+          ${actionBtns}
         `;
         c.appendChild(div);
       });
     }
 
-    function tambahMasterPegawaiModal() {
-      masterPegawai.push({ nama: "PEGAWAI BARU", nip: "-", pangkat: "-", jabatan: "Staf" });
-      renderListMasterPegawai();
-      renderFormPegawai();
-      tampilkanToast("Pegawai baru ditambahkan ke Master.");
+    function renderListMasterUsers() {
+      const c = document.getElementById('list-master-users');
+      if (!c) return;
+      c.innerHTML = '';
+      masterUsers.forEach((u, idx) => {
+        const div = document.createElement('div');
+        div.className = "p-3 bg-white border border-slate-200 rounded-xl flex items-center justify-between gap-2 shadow-sm";
+        let actionBtns = '';
+        if (currentUserRole === 'admin') {
+          actionBtns = `
+            <div class="flex items-center gap-1.5 flex-shrink-0">
+              <button onclick="editMasterUser(${idx})" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-700 text-[11px] font-bold rounded border border-amber-200 transition">Edit</button>
+              <button onclick="konfirmasiHapusUser(${idx})" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 text-[11px] font-bold rounded border border-rose-200 transition">Hapus</button>
+            </div>
+          `;
+        }
+        const roleBadge = u.role === 'admin' 
+          ? '<span class="bg-blue-100 text-blue-800 text-[10px] font-bold px-2 py-0.5 rounded">Administrator</span>' 
+          : '<span class="bg-slate-100 text-slate-800 text-[10px] font-bold px-2 py-0.5 rounded">Pegawai</span>';
+
+        div.innerHTML = `
+          <div class="space-y-0.5">
+            <div class="text-xs font-bold text-slate-900 flex items-center gap-2"><span>${u.nama}</span> ${roleBadge}</div>
+            <div class="text-[11px] text-slate-500">Username Login (NIP Tanpa Spasi): <code class="bg-slate-100 px-1 rounded font-semibold text-blue-900">${u.username}</code></div>
+          </div>
+          ${actionBtns}
+        `;
+        c.appendChild(div);
+      });
     }
 
-    function tambahMasterPejabatModal() {
-      masterPejabat.push({ kewenangan: "An. KEPALA BPPRD", jabatan: "Pejabat Baru", nama: "NAMA PEJABAT", pangkat: "Pembina (IV/a)", nip: "19800101 200501 1 001" });
+    // Modal Pegawai CRUD
+    function bukaModalPegawai() {
+      if (currentUserRole !== 'admin') {
+        tampilkanToast("Akses ditolak: Hanya Admin yang dapat menambah data.");
+        return;
+      }
+      document.getElementById('edit-pegawai-idx').value = "-1";
+      document.getElementById('modal-pegawai-title').textContent = "Tambah Pegawai Baru";
+      document.getElementById('input-pegawai-nama').value = "";
+      document.getElementById('input-pegawai-nip').value = "";
+      document.getElementById('input-pegawai-pangkat').value = "";
+      document.getElementById('input-pegawai-jabatan').value = "";
+      document.getElementById('modal-pegawai').classList.remove('hidden');
+    }
+
+    function tutupModalPegawai() {
+      document.getElementById('modal-pegawai').classList.add('hidden');
+    }
+
+    function editMasterPegawai(idx) {
+      if (currentUserRole !== 'admin') return;
+      const p = masterPegawai[idx];
+      document.getElementById('edit-pegawai-idx').value = idx;
+      document.getElementById('modal-pegawai-title').textContent = "Edit Data Pegawai";
+      document.getElementById('input-pegawai-nama').value = p.nama;
+      document.getElementById('input-pegawai-nip').value = p.nip;
+      document.getElementById('input-pegawai-pangkat').value = p.pangkat;
+      document.getElementById('input-pegawai-jabatan').value = p.jabatan;
+      document.getElementById('modal-pegawai').classList.remove('hidden');
+    }
+
+    function simpanMasterPegawai() {
+      const idx = parseInt(document.getElementById('edit-pegawai-idx').value, 10);
+      const nama = document.getElementById('input-pegawai-nama').value.trim();
+      const nipRaw = document.getElementById('input-pegawai-nip').value.trim();
+      const pangkat = document.getElementById('input-pegawai-pangkat').value.trim();
+      const jabatan = document.getElementById('input-pegawai-jabatan').value.trim();
+
+      if (!nama || !nipRaw) {
+        tampilkanToast("Nama dan NIP pegawai wajib diisi!");
+        return;
+      }
+
+      const nipClean = nipRaw.replace(/\s+/g, '');
+
+      const obj = { nama, nip: nipRaw, pangkat: pangkat || '-', jabatan: jabatan || 'Staf' };
+      if (idx === -1) {
+        masterPegawai.push(obj);
+        if (!masterUsers.some(u => u.username === nipClean)) {
+          masterUsers.push({ username: nipClean, nama: nama, role: "pegawai" });
+        }
+        tampilkanToast("Pegawai & Akun Login berhasil ditambahkan.");
+      } else {
+        masterPegawai[idx] = obj;
+        const existingUser = masterUsers.find(u => u.nama === nama);
+        if (existingUser) {
+          existingUser.username = nipClean;
+        } else if (!masterUsers.some(u => u.username === nipClean)) {
+          masterUsers.push({ username: nipClean, nama: nama, role: "pegawai" });
+        }
+        tampilkanToast("Pegawai berhasil diperbarui.");
+      }
+      tutupModalPegawai();
+      renderListMasterPegawai();
+      renderListMasterUsers();
+      renderFormPegawai();
+      sinkronkanKeCloudSemua();
+    }
+
+    function konfirmasiHapusPegawai(idx) {
+      if (currentUserRole !== 'admin') return;
+      bukaModalConfirm(`Apakah Anda yakin ingin menghapus ${masterPegawai[idx].nama}?`, () => {
+        masterPegawai.splice(idx, 1);
+        renderListMasterPegawai();
+        renderFormPegawai();
+        sinkronkanKeCloudSemua();
+        tampilkanToast("Pegawai berhasil dihapus.");
+      });
+    }
+
+    // Modal Pejabat CRUD
+    function bukaModalPejabat() {
+      if (currentUserRole !== 'admin') {
+        tampilkanToast("Akses ditolak: Hanya Admin yang dapat menambah data.");
+        return;
+      }
+      document.getElementById('edit-pejabat-idx').value = "-1";
+      document.getElementById('modal-pejabat-title').textContent = "Tambah Pejabat Baru";
+      document.getElementById('input-pejabat-kewenangan').value = "An. KEPALA BPPRD";
+      document.getElementById('input-pejabat-jabatan').value = "";
+      document.getElementById('input-pejabat-nama').value = "";
+      document.getElementById('input-pejabat-pangkat').value = "";
+      document.getElementById('input-pejabat-nip').value = "";
+      document.getElementById('modal-pejabat').classList.remove('hidden');
+    }
+
+    function tutupModalPejabat() {
+      document.getElementById('modal-pejabat').classList.add('hidden');
+    }
+
+    function editMasterPejabat(idx) {
+      if (currentUserRole !== 'admin') return;
+      const p = masterPejabat[idx];
+      document.getElementById('edit-pejabat-idx').value = idx;
+      document.getElementById('modal-pejabat-title').textContent = "Edit Data Pejabat";
+      document.getElementById('input-pejabat-kewenangan').value = p.kewenangan;
+      document.getElementById('input-pejabat-jabatan').value = p.jabatan;
+      document.getElementById('input-pejabat-nama').value = p.nama;
+      document.getElementById('input-pejabat-pangkat').value = p.pangkat;
+      document.getElementById('input-pejabat-nip').value = p.nip;
+      document.getElementById('modal-pejabat').classList.remove('hidden');
+    }
+
+    function simpanMasterPejabat() {
+      const idx = parseInt(document.getElementById('edit-pejabat-idx').value, 10);
+      const kewenangan = document.getElementById('input-pejabat-kewenangan').value.trim();
+      const jabatan = document.getElementById('input-pejabat-jabatan').value.trim();
+      const nama = document.getElementById('input-pejabat-nama').value.trim();
+      const pangkat = document.getElementById('input-pejabat-pangkat').value.trim();
+      const nip = document.getElementById('input-pejabat-nip').value.trim();
+
+      if (!nama || !jabatan || !nip) {
+        tampilkanToast("Jabatan, Nama, dan NIP Pejabat wajib diisi!");
+        return;
+      }
+
+      const obj = { kewenangan: kewenangan || 'An. KEPALA BPPRD', jabatan, nama, pangkat: pangkat || 'Pembina (IV/a)', nip };
+      if (idx === -1) {
+        masterPejabat.push(obj);
+        tampilkanToast("Pejabat berhasil ditambahkan.");
+      } else {
+        masterPejabat[idx] = obj;
+        tampilkanToast("Pejabat berhasil diperbarui.");
+      }
+      tutupModalPejabat();
       renderListMasterPejabat();
       renderDropdownPejabatPenandatangan();
-      tampilkanToast("Pejabat baru ditambahkan ke Master.");
+      sinkronkanKeCloudSemua();
+    }
+
+    function konfirmasiHapusPejabat(idx) {
+      if (currentUserRole !== 'admin') return;
+      bukaModalConfirm(`Apakah Anda yakin ingin menghapus ${masterPejabat[idx].jabatan}?`, () => {
+        masterPejabat.splice(idx, 1);
+        renderListMasterPejabat();
+        renderDropdownPejabatPenandatangan();
+        sinkronkanKeCloudSemua();
+        tampilkanToast("Pejabat berhasil dihapus.");
+      });
+    }
+
+    // Modal User Settings CRUD
+    function bukaModalUser() {
+      if (currentUserRole !== 'admin') {
+        tampilkanToast("Akses ditolak: Hanya Admin yang dapat mengelola akun.");
+        return;
+      }
+      document.getElementById('edit-user-idx').value = "-1";
+      document.getElementById('modal-user-title').textContent = "Tambah Akun Pengguna Baru";
+      document.getElementById('input-user-username').value = "";
+      document.getElementById('input-user-nama').value = "";
+      document.getElementById('input-user-role').value = "pegawai";
+      document.getElementById('input-user-pass').value = "";
+      document.getElementById('modal-user').classList.remove('hidden');
+    }
+
+    function tutupModalUser() {
+      document.getElementById('modal-user').classList.add('hidden');
+    }
+
+    function editMasterUser(idx) {
+      if (currentUserRole !== 'admin') return;
+      const u = masterUsers[idx];
+      document.getElementById('edit-user-idx').value = idx;
+      document.getElementById('modal-user-title').textContent = "Edit Akun Pengguna";
+      document.getElementById('input-user-username').value = u.username;
+      document.getElementById('input-user-nama').value = u.nama;
+      document.getElementById('input-user-role').value = u.role;
+      document.getElementById('input-user-pass').value = "";
+      document.getElementById('modal-user').classList.remove('hidden');
+    }
+
+    function simpanMasterUser() {
+      const idx = parseInt(document.getElementById('edit-user-idx').value, 10);
+      const usernameRaw = document.getElementById('input-user-username').value.trim();
+      const nama = document.getElementById('input-user-nama').value.trim();
+      const role = document.getElementById('input-user-role').value;
+
+      if (!usernameRaw || !nama) {
+        tampilkanToast("Username (NIP) dan Nama Pengguna wajib diisi!");
+        return;
+      }
+
+      const usernameClean = usernameRaw.replace(/\s+/g, '');
+
+      const obj = { username: usernameClean, nama, role };
+      if (idx === -1) {
+        masterUsers.push(obj);
+        tampilkanToast("Akun pengguna berhasil ditambahkan.");
+      } else {
+        masterUsers[idx] = obj;
+        tampilkanToast("Akun pengguna berhasil diperbarui.");
+      }
+      tutupModalUser();
+      renderListMasterUsers();
+      sinkronkanKeCloudSemua();
+    }
+
+    function konfirmasiHapusUser(idx) {
+      if (currentUserRole !== 'admin') return;
+      bukaModalConfirm(`Apakah Anda yakin ingin menghapus akun ${masterUsers[idx].nama}?`, () => {
+        masterUsers.splice(idx, 1);
+        renderListMasterUsers();
+        sinkronkanKeCloudSemua();
+        tampilkanToast("Akun pengguna berhasil dihapus.");
+      });
     }
 
     function renderFormInstruksi() {
@@ -886,6 +1301,39 @@
     function ubahInstruksiForm(idx, val) {
       state.instruksi[idx] = val;
       perbaruiPratinjau();
+    }
+
+    function renderFormPegawai() {
+      const c = document.getElementById('form-pegawai-list');
+      if (!c) return;
+      c.innerHTML = '';
+      state.pegawai.forEach((p, pi) => {
+        let opts = '<option value="">-- Pilih dari Master Pegawai --</option>';
+        masterPegawai.forEach((mp, mi) => {
+          const sel = (mp.nama === p.nama && mp.nip === p.nip) ? 'selected' : '';
+          opts += `<option value="${mi}" ${sel}>${mp.nama} (${mp.nip})</option>`;
+        });
+
+        const div = document.createElement('div');
+        div.className = "p-3 bg-white rounded-xl border border-slate-200 space-y-2 relative shadow-sm";
+        div.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-blue-900">Pegawai #${pi + 1}</span>
+            <button type="button" onclick="hapusPegawaiForm(${pi})" class="text-rose-600 hover:text-rose-800 text-xs font-bold px-2 py-0.5 bg-rose-50 rounded">Hapus</button>
+          </div>
+          <div>
+            <label class="block text-[10px] font-semibold text-slate-500 mb-0.5">Pilih Master Pegawai</label>
+            <select onchange="pilihPegawaiForm(${pi}, this.value)" class="form-input text-xs bg-slate-50 cursor-pointer">${opts}</select>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div><label class="block text-[10px] font-semibold text-slate-500 mb-0.5">Nama & Gelar</label><input type="text" value="${p.nama}" class="form-input text-xs" oninput="state.pegawai[${pi}].nama=this.value; perbaruiPratinjau();"></div>
+            <div><label class="block text-[10px] font-semibold text-slate-500 mb-0.5">NIP</label><input type="text" value="${p.nip}" class="form-input text-xs" oninput="state.pegawai[${pi}].nip=this.value; perbaruiPratinjau();"></div>
+            <div><label class="block text-[10px] font-semibold text-slate-500 mb-0.5">Pangkat / Gol.</label><input type="text" value="${p.pangkat}" class="form-input text-xs" oninput="state.pegawai[${pi}].pangkat=this.value; perbaruiPratinjau();"></div>
+            <div><label class="block text-[10px] font-semibold text-slate-500 mb-0.5">Jabatan</label><input type="text" value="${p.jabatan}" class="form-input text-xs" oninput="state.pegawai[${pi}].jabatan=this.value; perbaruiPratinjau();"></div>
+          </div>
+        `;
+        c.appendChild(div);
+      });
     }
 
     function tambahPegawai() {
@@ -1114,26 +1562,30 @@
       document.querySelectorAll('.t-ttdPangkat').forEach(el => el.textContent = state.ttdPangkat);
       document.querySelectorAll('.t-ttdNip').forEach(el => el.textContent = state.ttdNip);
 
-      let pHtml = '';
+      let pHtml = '<table style="width: 100%; border-collapse: collapse;" class="no-border-table"><colgroup><col style="width: 16px;"><col style="width: auto;"></colgroup><tbody>';
       state.pegawai.forEach((p, idx) => {
         pHtml += `
-          <div style="margin-bottom: 8px;">
-            <table style="width: 100%; border-collapse: collapse; table-layout: fixed;" class="no-border-table">
-              <colgroup><col style="width: 24px;"><col style="width: 115px;"><col style="width: 16px;"><col style="width: auto;"></colgroup>
-              <tbody>
-                <tr><td style="vertical-align: top;">${idx + 1}.</td><td style="vertical-align: top;">Nama</td><td style="text-align: center;">:</td><td style="font-weight: bold;">${p.nama || '-'}</td></tr>
-                <tr><td></td><td>NIP</td><td style="text-align: center;">:</td><td>${p.nip || '-'}</td></tr>
-                <tr><td></td><td>Pangkat / Gol.</td><td style="text-align: center;">:</td><td>${p.pangkat || '-'}</td></tr>
-                <tr><td></td><td>Jabatan</td><td style="text-align: center;">:</td><td>${p.jabatan || '-'}</td></tr>
-              </tbody>
-            </table>
-          </div>
+          <tr>
+            <td style="vertical-align: top; padding: 2px 0;">${idx + 1}.</td>
+            <td style="vertical-align: top; padding: 2px 0;">
+              <table style="width: 100%; border-collapse: collapse; table-layout: fixed;" class="no-border-table">
+                <colgroup><col style="width: 115px;"><col style="width: 16px;"><col style="width: auto;"></colgroup>
+                <tbody>
+                  <tr><td style="vertical-align: top;">Nama</td><td style="text-align: center;">:</td><td style="font-weight: bold;">${p.nama || '-'}</td></tr>
+                  <tr><td>NIP</td><td style="text-align: center;">:</td><td>${p.nip || '-'}</td></tr>
+                  <tr><td>Pangkat / Gol.</td><td style="text-align: center;">:</td><td>${p.pangkat || '-'}</td></tr>
+                  <tr><td>Jabatan</td><td style="text-align: center;">:</td><td>${p.jabatan || '-'}</td></tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
         `;
       });
+      pHtml += '</tbody></table>';
       const ep = document.getElementById('t-pegawai');
       if (ep) ep.innerHTML = pHtml;
 
-      let iHtml = '<table style="width: 100%; border-collapse: collapse;" class="no-border-table"><colgroup><col style="width: 24px;"><col style="width: auto;"></colgroup><tbody>';
+      let iHtml = '<table style="width: 100%; border-collapse: collapse;" class="no-border-table"><colgroup><col style="width: 16px;"><col style="width: auto;"></colgroup><tbody>';
       state.instruksi.forEach((inst, idx) => {
         iHtml += `<tr><td style="vertical-align: top; padding: 2px 0;">${idx + 1}.</td><td style="vertical-align: top; text-align: justify; padding: 2px 0;">${inst || '-'}</td></tr>`;
       });
@@ -1251,7 +1703,7 @@
               <td style="border: 1px solid #000; padding: 8px 12px; vertical-align: top;">
                 <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                   <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;" class="text-[12pt] no-border-table">
-                    <colgroup><col style="width: 18px;"><col style="width: 98px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
+                    <colgroup><col style="width: 20px;"><col style="width: 110px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
                     <tr><td style="vertical-align: top; padding: 2px 0;">I.</td><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Berangkat dari</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${state.spd.tempatBerangkat || 'Bangko'}</td></tr>
                     <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
                     <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0;">Ke</td><td style="text-align: center; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
@@ -1272,7 +1724,7 @@
                 <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                   <div>
                     <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;" class="text-[12pt] no-border-table">
-                      <colgroup><col style="width: 22px;"><col style="width: 95px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
+                      <colgroup><col style="width: 24px;"><col style="width: 110px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
                       <tr><td style="vertical-align: top; padding: 2px 0;">II.</td><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Tiba di</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
                       <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
                     </table>
@@ -1288,9 +1740,9 @@
                 <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                   <div>
                     <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;" class="text-[12pt] no-border-table">
-                      <colgroup><col style="width: 102px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
-                      <tr><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Berangkat dari</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
-                      <tr><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
+                      <colgroup><col style="width: 24px;"><col style="width: 110px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
+                      <tr><td style="vertical-align: top; padding: 2px 0;"></td><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Berangkat dari</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
+                      <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
                     </table>
                   </div>
                   <div class="mb-4">
@@ -1305,7 +1757,7 @@
               <td style="border: 1px solid #000; padding: 8px 12px; vertical-align: top;">
                 <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                   <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;" class="text-[12pt] no-border-table">
-                    <colgroup><col style="width: 26px;"><col style="width: 125px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
+                    <colgroup><col style="width: 26px;"><col style="width: 110px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
                     <tr><td style="vertical-align: top; padding: 2px 0;">III.</td><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Tiba Kembali di</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${state.spd.tempatBerangkat || 'Bangko'}</td></tr>
                     <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
                   </table>
@@ -1453,12 +1905,6 @@
       renderFormInstruksi();
       renderFormPegawai();
 
-      const elSpdPej = document.getElementById('f_spdPejabatPemberi');
-      if (elSpdPej) elSpdPej.value = state.spd.pejabatPemberi;
-      const elSpdTempatB = document.getElementById('f_spdTempatBerangkat');
-      if (elSpdTempatB) elSpdTempatB.value = state.spd.tempatBerangkat;
-      const elSpdTempatT = document.getElementById('f_spdTempatTujuan');
-      if (elSpdTempatT) elSpdTempatT.value = state.spd.tempatTujuan;
       const elSpdLama = document.getElementById('f_spdLamaHari');
       if (elSpdLama) elSpdLama.value = state.spd.lamaHari;
       const elSpdTglB = document.getElementById('f_spdTglBerangkat');

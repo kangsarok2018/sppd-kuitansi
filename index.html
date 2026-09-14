@@ -27,7 +27,6 @@
     .kertas-kuitansi { max-width: 815px; padding: 1.2cm 1cm 1.5cm 1cm !important; min-height: 14cm; }
     .page-break { page-break-after: always; break-after: page; }
 
-    /* Kuitansi Border & Inner Table Styles */
     .sheet-kuitansi {
       font-family: Arial, Helvetica, sans-serif;
       color: #000000;
@@ -51,50 +50,13 @@
       padding: 5px 8px;
       box-sizing: border-box;
     }
-    .inner-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    .inner-table td {
-      border: none !important;
-      padding: 1.5px 2px !important;
-      font-size: 10pt;
-      line-height: 1.35;
-    }
-    .text-kop-1 {
-      font-size: 11.5pt;
-      font-weight: bold;
-      letter-spacing: 0.3px;
-      line-height: 1.25;
-      white-space: nowrap;
-    }
-    .text-kop-2 {
-      font-size: 11.5pt;
-      font-weight: bold;
-      letter-spacing: 0.3px;
-      line-height: 1.25;
-      margin-top: 2px;
-      white-space: nowrap;
-    }
-    .table-rincian-sppd {
-      border: 2px solid #000000 !important;
-      border-collapse: collapse;
-      width: 100%;
-    }
-    .table-rincian-sppd th {
-      border: 1.5px solid #000000;
-      padding: 6px 4px;
-      text-align: center;
-      font-size: 9.5pt;
-      font-weight: bold;
-      background-color: #ffffff;
-    }
-    .table-rincian-sppd td {
-      border: 1px solid #000000;
-      font-size: 9.5pt;
-      padding: 4px 6px;
-      vertical-align: top;
-    }
+    .inner-table { width: 100%; border-collapse: collapse; }
+    .inner-table td { border: none !important; padding: 1.5px 2px !important; font-size: 10pt; line-height: 1.35; }
+    .text-kop-1 { font-size: 11.5pt; font-weight: bold; letter-spacing: 0.3px; line-height: 1.25; white-space: nowrap; }
+    .text-kop-2 { font-size: 11.5pt; font-weight: bold; letter-spacing: 0.3px; line-height: 1.25; margin-top: 2px; white-space: nowrap; }
+    .table-rincian-sppd { border: 2px solid #000000 !important; border-collapse: collapse; width: 100%; }
+    .table-rincian-sppd th { border: 1.5px solid #000000; padding: 6px 4px; text-align: center; font-size: 9.5pt; font-weight: bold; background-color: #ffffff; }
+    .table-rincian-sppd td { border: 1px solid #000000; font-size: 9.5pt; padding: 4px 6px; vertical-align: top; }
 
     @media print {
       body { background: #ffffff !important; color: #000000 !important; }
@@ -154,99 +116,111 @@
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto p-4 sm:p-6 w-full flex-1">
+  <main class="max-w-7xl mx-auto p-4 sm:p-6 w-full flex-1 space-y-6">
 
-    <!-- DASHBOARD SECTION -->
+    <!-- DASHBOARD TAB -->
     <div id="section-dashboard" class="space-y-6">
-      <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white p-6 sm:p-8 rounded-2xl shadow-lg relative overflow-hidden">
-        <div class="relative z-10 max-w-2xl">
+      <!-- Banner dengan Jam & Tanggal Saja -->
+      <div class="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white p-6 sm:p-8 rounded-2xl shadow-lg relative overflow-hidden flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+        <div class="relative z-10 max-w-xl">
           <span class="bg-blue-500/30 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30">Portal Resmi BPPRD Kab. Merangin</span>
           <h2 class="text-2xl sm:text-3xl font-bold mt-3 mb-2">Sistem Informasi Perjalanan Dinas & Naskah Dinas</h2>
           <p class="text-blue-200 text-xs sm:text-sm leading-relaxed">
-            Kelola, buat, pratinjau, dan cetak Surat Tugas, SPD, Punggung SPD, Kuitansi / TBP, serta Rincian Biaya secara otomatis dan tersinkronisasi langsung dengan Firebase Cloud.
+            Kelola, buat, pratinjau, dan arsipkan Surat Tugas, SPD, Punggung SPD, Kuitansi / TBP, serta Rincian Biaya secara otomatis dan tersinkronisasi dengan Cloud Database.
           </p>
           <div class="flex flex-wrap gap-3 mt-5">
             <button onclick="gantiTabNav('form')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-5 py-2.5 rounded-xl shadow-md transition">Mulai Buat Dokumen Dinas</button>
             <button onclick="gantiTabNav('preview')" class="bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold px-4 py-2.5 rounded-xl transition">Pratinjau Semua Dokumen</button>
           </div>
         </div>
+
+        <!-- Clock Widget -->
+        <div class="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-inner text-white flex flex-col items-center justify-center min-w-[260px] lg:self-center">
+          <div id="live-clock" class="text-3xl sm:text-4xl font-extrabold tracking-tight text-emerald-400 font-mono drop-shadow">00:00:00</div>
+          <div id="live-date" class="text-xs font-medium text-slate-100 mt-2">Senin, 14 September 2026</div>
+        </div>
       </div>
 
-      <!-- Professional SPPD & Financial Summary Card + Save Button -->
-      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+      <!-- BUDGET OVERVIEW CARDS -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
           <div>
-            <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-              Ringkasan SPPD & Rincian Biaya Aktif
-            </h3>
-            <p class="text-xs text-slate-500 mt-0.5">Ringkasan real-time dari dokumen perjalanan dinas yang sedang dikonfigurasi.</p>
+            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Total Dana Awal (Pagu)</p>
+            <h3 id="dash-dana-awal" class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">Rp 0</h3>
+          </div>
+          <div class="w-12 h-12 bg-blue-50 text-blue-700 rounded-xl flex items-center justify-center font-bold text-lg shadow-sm">💰</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+          <div>
+            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Dana Terpakai (Arsip SPPD)</p>
+            <h3 id="dash-dana-terpakai" class="text-xl sm:text-2xl font-bold text-rose-600 mt-1">Rp 0</h3>
+          </div>
+          <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center font-bold text-lg shadow-sm">📉</div>
+        </div>
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center justify-between">
+          <div>
+            <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wide">Sisa Dana Anggaran</p>
+            <h3 id="dash-sisa-dana" class="text-xl sm:text-2xl font-bold text-emerald-600 mt-1">Rp 0</h3>
+          </div>
+          <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-lg shadow-sm">📈</div>
+        </div>
+      </div>
+
+      <!-- ARSIP TABLE -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b pb-4">
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">Arsip & Riwayat Surat Tugas / SPPD Tersimpan di Cloud</h3>
+            <p class="text-xs text-slate-500">Daftar Surat Tugas dan SPPD yang telah diproses dan diarsipkan ke Cloud Database.</p>
           </div>
           <div class="flex items-center gap-2">
-            <button onclick="arsipSimpanSppdCloud()" class="text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl transition shadow flex items-center gap-1.5">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"/></svg>
-              <span>Simpan & Arsipkan SPPD</span>
+            <button onclick="prosesDanSimpanArsip()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5 shadow">
+              <span>💾</span> + Arsipkan SPPD Saat Ini
             </button>
-            <button onclick="gantiTabNav('preview')" class="text-xs font-bold bg-blue-50 hover:bg-blue-100 text-blue-700 px-4 py-2 rounded-xl transition border border-blue-200">Lihat Detail Dokumen →</button>
+            <button onclick="muatArsipCloud()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3.5 py-1.5 rounded-lg text-xs transition flex items-center gap-1.5">
+              <span>🔄</span> Refresh
+            </button>
           </div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-            <span class="text-[10px] font-bold tracking-wider uppercase bg-blue-100 text-blue-800 px-2.5 py-1 rounded-md">Informasi Utama</span>
-            <div class="space-y-2 pt-1 text-xs">
-              <div class="flex justify-between border-b border-slate-200 pb-1.5"><span class="text-slate-500">Nomor Surat Tugas</span><span id="dash-summary-no-st" class="font-bold text-slate-900 text-right">094/...</span></div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5"><span class="text-slate-500">Tujuan Perjalanan</span><span id="dash-summary-tujuan" class="font-bold text-blue-900 text-right">Kecamatan Bangko</span></div>
-              <div class="flex justify-between border-b border-slate-200 pb-1.5"><span class="text-slate-500">Lama Pelaksanaan</span><span id="dash-summary-lama" class="font-bold text-slate-900 text-right">1 (Satu) Hari</span></div>
-              <div class="flex justify-between"><span class="text-slate-500">Tanggal Berangkat</span><span id="dash-summary-tgl" class="font-bold text-emerald-700 text-right">09 September 2026</span></div>
-            </div>
-          </div>
-
-          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
-            <span class="text-[10px] font-bold tracking-wider uppercase bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-md">Personil Pelaksana</span>
-            <div id="dash-summary-pegawai" class="space-y-2 pt-1 text-xs max-h-40 overflow-y-auto">
-              <!-- Dynamically populated -->
-            </div>
-          </div>
-
-          <div class="bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-4 rounded-xl shadow-sm flex flex-col justify-between space-y-4">
-            <div>
-              <span class="text-[10px] font-bold tracking-wider uppercase bg-white/20 text-blue-200 px-2.5 py-1 rounded-md">Total Anggaran SPPD</span>
-              <div class="mt-3">
-                <span class="text-xs text-blue-200 block">Total Biaya (Uang Harian & BBM)</span>
-                <h4 id="dash-summary-total-biaya" class="text-2xl font-extrabold text-emerald-400 mt-1">Rp 150.000</h4>
-              </div>
-            </div>
-            <div class="border-t border-white/10 pt-3 flex items-center justify-between text-[11px] text-blue-200">
-              <span id="dash-summary-rincian-count">1 Personil / Staf</span>
-              <button onclick="gantiTabNav('preview')" class="text-white font-bold underline hover:text-blue-300">Cek Kuitansi</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Arsip Surat Tugas / SPPD Tersimpan (Cloud Database) -->
-        <div class="border-t pt-5 mt-4 space-y-3">
-          <div class="flex items-center justify-between">
-            <div>
-              <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">Arsip Surat Tugas & SPPD Tersimpan di Cloud Database</h4>
-              <p class="text-[11px] text-slate-500">Daftar Surat Tugas yang telah disimpan dan diarsipkan oleh pegawai/admin.</p>
-            </div>
-            <button onclick="muatArsipSppdCloud()" class="text-xs text-blue-600 hover:underline font-semibold">🔄 Refresh Arsip</button>
-          </div>
-          <div id="list-arsip-sppd" class="space-y-2 max-h-60 overflow-y-auto">
-            <div class="text-xs text-slate-400 p-3 bg-slate-50 rounded-xl text-center">Memuat arsip dari Firebase Cloud...</div>
-          </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 text-[11px] font-bold text-slate-600 uppercase border-b border-slate-200">
+                <th class="py-3 px-4 w-12 text-center">NO</th>
+                <th class="py-3 px-4">PELAKSANA</th>
+                <th class="py-3 px-4">NOMOR SURAT</th>
+                <th class="py-3 px-4">TANGGAL SPD</th>
+                <th class="py-3 px-4">TUJUAN</th>
+                <th class="py-3 px-4 text-right">BIAYA (RP)</th>
+                <th class="py-3 px-4 text-center w-28">AKSI</th>
+              </tr>
+            </thead>
+            <tbody id="table-arsip-body" class="divide-y divide-slate-100 text-xs">
+              <tr>
+                <td colspan="7" class="text-center py-8 text-slate-400">Belum ada arsip SPPD tersimpan. Klik "+ Arsipkan SPPD Saat Ini" untuk menyimpan.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
 
-    <!-- FORMULIR & EDITOR SECTION -->
+    <!-- FORMULIR & EDITOR TAB -->
     <div id="section-form" class="space-y-6 hidden">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-4xl mx-auto">
-        <div class="flex items-center justify-between border-b pb-4 mb-6">
-          <div><h2 class="text-base font-bold text-slate-900">Formulir Naskah Perjalanan Dinas</h2><p class="text-xs text-slate-500">Perubahan data memperbarui seluruh 5 dokumen secara real-time.</p></div>
-          <button onclick="gantiTabNav('preview')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow">Lihat Pratinjau Dokumen →</button>
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-4xl mx-auto space-y-6">
+        <div class="flex flex-wrap items-center justify-between border-b pb-4 gap-3">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">Formulir Naskah Perjalanan Dinas</h2>
+            <p class="text-xs text-slate-500">Perubahan data memperbarui seluruh 5 dokumen secara real-time.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="prosesDanSimpanArsip()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow flex items-center gap-1.5">
+              <span>💾</span> Proses & Simpan Arsip SPPD
+            </button>
+            <button onclick="gantiTabNav('preview')" class="bg-blue-900 hover:bg-blue-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow">Lihat Pratinjau →</button>
+          </div>
         </div>
+
         <div class="space-y-6">
           <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
             <h3 class="text-xs font-bold text-blue-900 uppercase">1. Nomor & Dasar Surat Tugas</h3>
@@ -279,6 +253,7 @@
           <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
             <h3 class="text-xs font-bold text-blue-900 uppercase">4. Detail Waktu & Tujuan (SPD)</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Alat Angkutan / Kendaraan</label><select id="f_spdAlatAngkut" class="form-input text-xs bg-white" onchange="ubahDataSpd('alatAngkut', this.value)"><option value="Kendaraan Roda Dua">Kendaraan Roda Dua</option><option value="Kendaraan Roda Empat">Kendaraan Roda Empat</option><option value="Kendaraan Umum">Kendaraan Umum</option><option value="Kendaraan Dinas">Kendaraan Dinas</option></select></div>
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Lama Perjalanan (Contoh: 1 (Satu) Hari)</label><input type="text" id="f_spdLamaHari" class="form-input text-xs" oninput="ubahDataSpd('lamaHari', this.value); hitungTanggalKembaliOtomatis();"></div>
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tanggal Berangkat</label><input type="text" id="f_spdTglBerangkat" class="form-input text-xs font-medium bg-emerald-50/50" oninput="ubahDataSpd('tglBerangkat', this.value); hitungTanggalKembaliOtomatis();"></div>
               <div><label class="block text-[11px] font-semibold text-slate-600 mb-1">Tanggal Harus Kembali</label><input type="text" id="f_spdTglKembali" class="form-input text-xs" oninput="ubahDataSpd('tglKembali', this.value)"></div>
@@ -311,7 +286,7 @@
       </div>
     </div>
 
-    <!-- PREVIEW SECTION -->
+    <!-- PRATINJAU DOKUMEN TAB -->
     <div id="section-preview" class="space-y-4 hidden">
       <div class="bg-white p-3 rounded-2xl border border-slate-200 flex flex-wrap items-center justify-between gap-3 shadow-sm no-print">
         <div class="flex items-center gap-2 flex-wrap">
@@ -591,13 +566,13 @@
       </div>
     </div>
 
-    <!-- MASTER SECTION -->
+    <!-- MASTER DATABASE TAB -->
     <div id="section-master" class="space-y-6 hidden">
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-4xl mx-auto">
-        <div class="flex flex-wrap items-center justify-between border-b pb-4 mb-4 gap-3">
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 max-w-4xl mx-auto space-y-6">
+        <div class="flex flex-wrap items-center justify-between border-b pb-4 gap-3">
           <div>
-            <h2 class="text-base font-bold text-slate-900">Manajemen Master Database & Pengaturan Pengguna</h2>
-            <p class="text-xs text-slate-500">Kelola Pegawai, Pejabat Penandatangan, dan Akun Pengguna (Username berbasis NIP).</p>
+            <h2 class="text-base font-bold text-slate-900">Manajemen Master Database & Pengaturan Dana</h2>
+            <p class="text-xs text-slate-500">Kelola Dana Awal (Pagu), Pegawai, Pejabat, dan Akun Pengguna.</p>
           </div>
           <div class="flex items-center gap-2">
             <label class="text-xs font-bold text-slate-700">Role Aktif:</label>
@@ -608,7 +583,17 @@
           </div>
         </div>
 
-        <div class="flex gap-2 mb-4 bg-slate-100 p-1 rounded-xl overflow-x-auto">
+        <!-- PENGATURAN DANA AWAL (PAGU) -->
+        <div class="bg-emerald-50/70 border border-emerald-200 p-4 rounded-xl space-y-2">
+          <h3 class="text-xs font-bold text-emerald-900 uppercase">Pengaturan Dana Awal Anggaran (Pagu)</h3>
+          <p class="text-[11px] text-emerald-700">Masukkan total pagu dana awal tahun anggaran untuk dihitung sisa dananya secara otomatis di Dashboard.</p>
+          <div class="flex items-center gap-3">
+            <input type="number" id="input-dana-awal" class="form-input text-xs font-bold text-emerald-800 bg-white max-w-xs" placeholder="Contoh: 50000000" oninput="simpanDanaAwal(this.value)">
+            <span class="text-xs font-bold text-emerald-900">Rupiah</span>
+          </div>
+        </div>
+
+        <div class="flex gap-2 bg-slate-100 p-1 rounded-xl overflow-x-auto">
           <button onclick="gantiSubMaster('pegawai')" id="btn-sub-pegawai" class="flex-1 py-2 px-3 rounded-lg bg-blue-900 text-white text-xs font-bold transition whitespace-nowrap">Master Pegawai</button>
           <button onclick="gantiSubMaster('pejabat')" id="btn-sub-pejabat" class="flex-1 py-2 px-3 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition whitespace-nowrap">Master Pejabat</button>
           <button onclick="gantiSubMaster('users')" id="btn-sub-users" class="flex-1 py-2 px-3 rounded-lg text-slate-600 hover:bg-slate-200 text-xs font-bold transition whitespace-nowrap">Pengaturan Pengguna (Login NIP)</button>
@@ -632,7 +617,7 @@
           <div id="list-master-pejabat" class="space-y-2"></div>
         </div>
 
-        <!-- Pengaturan Pengguna (User Management Settings) Section -->
+        <!-- Pengaturan Pengguna Section -->
         <div id="sub-master-users-sec" class="space-y-4 hidden">
           <div class="flex justify-between items-center">
             <div>
@@ -734,10 +719,6 @@
           <option value="pegawai">Pegawai / Staf</option>
         </select>
       </div>
-      <div>
-        <label class="block text-xs font-semibold text-slate-600 mb-1">Password Sementara</label>
-        <input type="password" id="input-user-pass" class="form-input text-xs" placeholder="••••••••">
-      </div>
       <div class="flex justify-end gap-2 pt-2">
         <button onclick="tutupModalUser()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-medium transition">Batal</button>
         <button onclick="simpanMasterUser()" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow">Simpan Akun</button>
@@ -745,11 +726,13 @@
     </div>
   </div>
 
+  <!-- TOAST NOTIFICATION -->
   <div id="toast" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-lg shadow-xl text-sm items-center gap-3 border border-slate-700 transition-all">
     <span class="text-emerald-400 font-bold">✓</span>
     <span id="toast-text">Notifikasi</span>
   </div>
 
+  <!-- CONFIRMATION MODAL -->
   <div id="modal-confirm" class="hidden fixed inset-0 z-[140] bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity">
     <div id="modal-confirm-panel" class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-6 space-y-4 scale-95 opacity-0 transition-all">
       <h3 class="font-bold text-base text-slate-900">Konfirmasi Hapus</h3>
@@ -767,8 +750,10 @@
     const ENDPOINT_PEJABAT = `${FIREBASE_BASE_URL}/master_pejabat.json`;
     const ENDPOINT_USERS = `${FIREBASE_BASE_URL}/master_users.json`;
     const ENDPOINT_ARSIP = `${FIREBASE_BASE_URL}/arsip_sppd.json`;
+    const ENDPOINT_DANA_AWAL = `${FIREBASE_BASE_URL}/dana_awal.json`;
 
     const BULAN_INDO = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    const HARI_INDO = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
     const dataDefault = {
       nomorPrefix: "094",
@@ -803,7 +788,7 @@
         pejabatPemberi: "KEPALA BADAN PENGELOLA PAJAK DAN RETRIBUSI DAERAH KABUPATEN MERANGIN",
         tingkatBiaya: "Menurut Peraturan Perjalanan Dinas",
         maksud: "Melaksanakan Kegiatan Pendataan Pajak Daerah di Kecamatan Bangko Kabupaten Merangin.",
-        alatAngkut: "Kendaraan Dinas / Umum",
+        alatAngkut: "Kendaraan Roda Dua",
         tempatBerangkat: "Bangko",
         tempatTujuan: "Kecamatan Bangko",
         lamaHari: "1 (Satu) Hari",
@@ -834,7 +819,7 @@
         program: "04",
         programNama: "Program Pengelola Pendapatan Daerah",
         kegiatan: "2.01",
-        kegiatanNama: "Kegiatan Pengelola Pendapatan Daerah",
+        kegiatanNama: "Kegiatan Pengelolaan Pendapatan Daerah",
         subKegiatan: "05",
         subKegiatanNama: "Pendataan dan Pendaftaran Objek Pajak Daerah",
         bendaharaNama: "NURASIAH, A.Md",
@@ -878,7 +863,57 @@
     let masterPejabat = [...masterPejabatDefault];
     let masterUsers = [...masterUsersDefault];
     let arsipSppdList = [];
+    let danaAwalPagu = 50000000; // Default 50 Juta
     let currentUserRole = 'admin';
+
+    function updateLiveClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      const clockEl = document.getElementById('live-clock');
+      if (clockEl) clockEl.textContent = `${hours}:${minutes}:${seconds}`;
+
+      const hari = HARI_INDO[now.getDay()];
+      const tgl = now.getDate();
+      const bulan = BULAN_INDO[now.getMonth()];
+      const tahun = now.getFullYear();
+      const dateEl = document.getElementById('live-date');
+      if (dateEl) dateEl.textContent = `${hari}, ${tgl} ${bulan} ${tahun}`;
+    }
+
+    function hitungDanPerbaruiStatistikDana() {
+      let totalTerpakai = 0;
+      arsipSppdList.forEach(item => {
+        totalTerpakai += (item.biaya || 0);
+      });
+      const sisaDana = danaAwalPagu - totalTerpakai;
+
+      const elAwal = document.getElementById('dash-dana-awal');
+      const elTerpakai = document.getElementById('dash-dana-terpakai');
+      const elSisa = document.getElementById('dash-sisa-dana');
+      const elInputAwal = document.getElementById('input-dana-awal');
+
+      if (elAwal) elAwal.textContent = `Rp ${formatRupiah(danaAwalPagu)}`;
+      if (elTerpakai) elTerpakai.textContent = `Rp ${formatRupiah(totalTerpakai)}`;
+      if (elSisa) {
+        elSisa.textContent = `Rp ${formatRupiah(sisaDana)}`;
+        elSisa.className = sisaDana < 0 ? "text-xl sm:text-2xl font-bold text-rose-600 mt-1" : "text-xl sm:text-2xl font-bold text-emerald-600 mt-1";
+      }
+      if (elInputAwal && document.activeElement !== elInputAwal) {
+        elInputAwal.value = danaAwalPagu;
+      }
+    }
+
+    async function simpanDanaAwal(val) {
+      danaAwalPagu = parseFloat(val) || 0;
+      hitungDanPerbaruiStatistikDana();
+      try {
+        await fetch(ENDPOINT_DANA_AWAL, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(danaAwalPagu) });
+      } catch (e) {
+        console.warn("Gagal menyimpan dana awal ke cloud");
+      }
+    }
 
     function gantiRoleUser(role) {
       currentUserRole = role;
@@ -943,8 +978,7 @@
       if (activeSec) activeSec.classList.remove('hidden');
       if (activeBtn) activeBtn.className = "px-4 py-2 text-xs font-bold rounded-lg transition bg-blue-600 text-white shadow-sm flex items-center gap-2 whitespace-nowrap";
       if (tab === 'dashboard') {
-        updateDashboardStats();
-        muatArsipSppdCloud();
+        muatArsipCloud();
       }
     }
 
@@ -971,141 +1005,6 @@
       }
     }
 
-    function updateDashboardStats() {
-      const summaryNoSt = document.getElementById('dash-summary-no-st');
-      const summaryTujuan = document.getElementById('dash-summary-tujuan');
-      const summaryLama = document.getElementById('dash-summary-lama');
-      const summaryTgl = document.getElementById('dash-summary-tgl');
-      const summaryPegawai = document.getElementById('dash-summary-pegawai');
-      const summaryTotalBiaya = document.getElementById('dash-summary-total-biaya');
-      const summaryRincianCount = document.getElementById('dash-summary-rincian-count');
-
-      if (summaryNoSt) summaryNoSt.textContent = `${state.nomorPrefix}/${state.nomorUrut || '...'}/${state.nomorKode}/${state.nomorTahun}`;
-      if (summaryTujuan) summaryTujuan.textContent = state.spd.tempatTujuan || '-';
-      if (summaryLama) summaryLama.textContent = state.spd.lamaHari || '-';
-      if (summaryTgl) summaryTgl.textContent = state.spd.tglBerangkat || '-';
-
-      let pegHtml = '';
-      state.pegawai.forEach((p, idx) => {
-        pegHtml += `
-          <div class="flex justify-between items-center border-b border-slate-200 pb-1.5 last:border-0 last:pb-0">
-            <span class="font-semibold text-slate-800">${idx + 1}. ${p.nama}</span>
-            <span class="text-slate-500 text-[10px]">${p.jabatan ? p.jabatan.substring(0, 25) + '...' : '-'}</span>
-          </div>
-        `;
-      });
-      if (summaryPegawai) summaryPegawai.innerHTML = pegHtml || '<span class="text-slate-400">Belum ada pegawai</span>';
-
-      const nominalPerOrg = state.spd.nominalPerOrang || 0;
-      const nominalBbm = state.spd.nominalBbm || 0;
-      const totalSemua = (state.pegawai.length * nominalPerOrg) + nominalBbm;
-      if (summaryTotalBiaya) summaryTotalBiaya.textContent = `Rp ${formatRupiah(totalSemua)}`;
-      if (summaryRincianCount) summaryRincianCount.textContent = `${state.pegawai.length} Personil / Staf Pelaksana`;
-    }
-
-    async function arsipSimpanSppdCloud() {
-      tampilkanToast("Menyimpan & mengarsipkan SPPD ke Cloud Database...");
-      try {
-        const arsipItem = {
-          id: 'sppd_' + Date.now(),
-          tanggalSimpan: new Date().toISOString(),
-          nomorSurat: `${state.nomorPrefix}/${state.nomorUrut || '000'}/${state.nomorKode}/${state.nomorTahun}`,
-          tujuan: state.spd.tempatTujuan,
-          tglBerangkat: state.spd.tglBerangkat,
-          jumlahPegawai: state.pegawai.length,
-          pegawaiPertama: state.pegawai[0] ? state.pegawai[0].nama : '-',
-          totalBiaya: (state.pegawai.length * (state.spd.nominalPerOrang || 0)) + (state.spd.nominalBbm || 0),
-          stateSnapshot: JSON.parse(JSON.stringify(state))
-        };
-
-        let res = await fetch(ENDPOINT_ARSIP);
-        let listArsip = [];
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) listArsip = data;
-          else if (data && typeof data === 'object') listArsip = Object.values(data);
-        }
-        listArsip.unshift(arsipItem);
-
-        await fetch(ENDPOINT_ARSIP, {
-          method: 'PUT',
-          headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify(listArsip)
-        });
-
-        tampilkanToast("Surat Tugas & SPPD berhasil diarsipkan permanen ke database!");
-        muatArsipSppdCloud();
-      } catch (e) {
-        tampilkanToast("Gagal mengarsipkan ke cloud database.");
-      }
-    }
-
-    async function muatArsipSppdCloud() {
-      const container = document.getElementById('list-arsip-sppd');
-      if (!container) return;
-      try {
-        const res = await fetch(ENDPOINT_ARSIP);
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data)) arsipSppdList = data;
-          else if (data && typeof data === 'object') arsipSppdList = Object.values(data);
-          else arsipSppdList = [];
-        }
-      } catch (e) {
-        arsipSppdList = [];
-      }
-
-      if (arsipSppdList.length === 0) {
-        container.innerHTML = `<div class="text-xs text-slate-400 p-3 bg-slate-50 rounded-xl text-center">Belum ada arsip SPPD tersimpan. Klik "Simpan & Arsipkan SPPD" untuk menyimpan.</div>`;
-        return;
-      }
-
-      let html = '';
-      arsipSppdList.forEach((item, idx) => {
-        html += `
-          <div class="p-3 bg-white border border-slate-200 rounded-xl flex flex-wrap items-center justify-between gap-3 shadow-sm">
-            <div class="space-y-0.5">
-              <div class="text-xs font-bold text-slate-900">No. ST: <span class="text-blue-900">${item.nomorSurat}</span> — Tujuan: <span class="text-emerald-700">${item.tujuan}</span></div>
-              <div class="text-[11px] text-slate-500">Pelaksana: ${item.pegawaiPertama} (${item.jumlahPegawai} Personil) • Total Biaya: Rp ${formatRupiah(item.totalBiaya)}</div>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <button onclick="muatArsipKeForm('${item.id}')" class="px-3 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 text-[11px] font-bold rounded border border-blue-200 transition">Muat Ulang</button>
-              <button onclick="hapusArsipItem(${idx})" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 text-[11px] font-bold rounded border border-rose-200 transition">Hapus</button>
-            </div>
-          </div>
-        `;
-      });
-      container.innerHTML = html;
-    }
-
-    function muatArsipKeForm(id) {
-      const found = arsipSppdList.find(a => a.id === id);
-      if (found && found.stateSnapshot) {
-        state = JSON.parse(JSON.stringify(found.stateSnapshot));
-        syncStateToFormInputs();
-        perbaruiPratinjau();
-        gantiTabNav('preview');
-        tampilkanToast("Arsip SPPD berhasil dimuat ke editor!");
-      }
-    }
-
-    async function hapusArsipItem(idx) {
-      bukaModalConfirm("Apakah Anda yakin ingin menghapus arsip SPPD ini?", async () => {
-        arsipSppdList.splice(idx, 1);
-        try {
-          await fetch(ENDPOINT_ARSIP, {
-            method: 'PUT',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(arsipSppdList)
-          });
-          tampilkanToast("Arsip berhasil dihapus.");
-          muatArsipSppdCloud();
-        } catch (e) {
-          tampilkanToast("Gagal menghapus arsip.");
-        }
-      });
-    }
-
     function syncStateToFormInputs() {
       const elNumPrefix = document.getElementById('f_nomorPrefix');
       if (elNumPrefix) elNumPrefix.value = state.nomorPrefix;
@@ -1121,6 +1020,8 @@
       renderFormInstruksi();
       renderFormPegawai();
 
+      const elSpdAlat = document.getElementById('f_spdAlatAngkut');
+      if (elSpdAlat) elSpdAlat.value = state.spd.alatAngkut || 'Kendaraan Roda Dua';
       const elSpdLama = document.getElementById('f_spdLamaHari');
       if (elSpdLama) elSpdLama.value = state.spd.lamaHari;
       const elSpdTglB = document.getElementById('f_spdTglBerangkat');
@@ -1162,6 +1063,11 @@
           const dataU = await resU.json();
           if (Array.isArray(dataU) && dataU.length > 0) masterUsers = dataU.filter(u => u && u.username);
         }
+        const resD = await fetch(ENDPOINT_DANA_AWAL);
+        if (resD.ok) {
+          const dataD = await resD.json();
+          if (typeof dataD === 'number' && !isNaN(dataD)) danaAwalPagu = dataD;
+        }
       } catch (e) {
         console.warn("Menggunakan database lokal default");
       }
@@ -1170,8 +1076,8 @@
       renderListMasterUsers();
       renderFormPegawai();
       renderDropdownPejabatPenandatangan();
+      muatArsipCloud();
       perbaruiPratinjau();
-      updateDashboardStats();
     }
 
     async function sinkronkanKeCloudSemua() {
@@ -1182,6 +1088,108 @@
       } catch (e) {
         console.warn("Gagal menyinkronkan data.");
       }
+    }
+
+    async function muatArsipCloud() {
+      try {
+        const res = await fetch(ENDPOINT_ARSIP);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            arsipSppdList = data.filter(item => item !== null);
+          } else if (data && typeof data === 'object') {
+            arsipSppdList = Object.values(data).filter(item => item !== null);
+          } else {
+            arsipSppdList = [];
+          }
+        }
+      } catch (e) {
+        arsipSppdList = [];
+      }
+      renderTabelArsip();
+      hitungDanPerbaruiStatistikDana();
+    }
+
+    async function prosesDanSimpanArsip() {
+      const nomorSurat = `${state.nomorPrefix}/${state.nomorUrut || '...'}/${state.nomorKode}/${state.nomorTahun}`;
+      const pelaksanaStr = state.pegawai.map(p => p.nama).join(', ');
+      const totalOrg = state.pegawai.length;
+      const nominalPerOrg = state.spd.nominalPerOrang || 150000;
+      const nominalBbm = state.spd.nominalBbm || 0;
+      const totalNominal = (totalOrg * nominalPerOrg) + nominalBbm;
+
+      const newArsip = {
+        id: Date.now(),
+        pelaksana: pelaksanaStr,
+        nomorSurat: nomorSurat,
+        tanggalSpd: state.spd.tglBerangkat || '-',
+        tujuan: state.spd.tempatTujuan || '-',
+        biaya: totalNominal,
+        stateData: JSON.parse(JSON.stringify(state))
+      };
+
+      arsipSppdList.push(newArsip);
+      try {
+        await fetch(ENDPOINT_ARSIP, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(arsipSppdList) });
+        tampilkanToast("SPPD berhasil diproses & diarsipkan ke Cloud Database!");
+        gantiTabNav('dashboard');
+      } catch (e) {
+        tampilkanToast("Gagal menyimpan ke Cloud Database.");
+      }
+    }
+
+    async function hapusArsip(idx) {
+      bukaModalConfirm("Apakah Anda yakin ingin menghapus arsip SPPD ini?", async () => {
+        arsipSppdList.splice(idx, 1);
+        try {
+          await fetch(ENDPOINT_ARSIP, { method: 'PUT', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(arsipSppdList) });
+          renderTabelArsip();
+          hitungDanPerbaruiStatistikDana();
+          tampilkanToast("Arsip SPPD berhasil dihapus.");
+        } catch (e) {
+          tampilkanToast("Gagal menghapus arsip.");
+        }
+      });
+    }
+
+    function muatArsipKeForm(idx) {
+      const arsip = arsipSppdList[idx];
+      if (arsip && arsip.stateData) {
+        state = JSON.parse(JSON.stringify(arsip.stateData));
+        syncStateToFormInputs();
+        perbaruiPratinjau();
+        gantiTabNav('preview');
+        tampilkanToast("Arsip SPPD dimuat. Menampilkan Pratinjau Dokumen.");
+      }
+    }
+
+    function renderTabelArsip() {
+      const tbody = document.getElementById('table-arsip-body');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      if (arsipSppdList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-400">Belum ada arsip SPPD tersimpan. Klik "+ Arsipkan SPPD Saat Ini" untuk menyimpan.</td></tr>`;
+        return;
+      }
+      arsipSppdList.forEach((a, idx) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+        tr.innerHTML = `
+          <td class="py-3 px-4 text-center font-medium text-slate-500">${idx + 1}</td>
+          <td class="py-3 px-4 font-bold text-slate-900">${a.pelaksana}</td>
+          <td class="py-3 px-4 text-blue-900 font-semibold">${a.nomorSurat}</td>
+          <td class="py-3 px-4 text-slate-700">${a.tanggalSpd}</td>
+          <td class="py-3 px-4 text-slate-700 font-medium">${a.tujuan}</td>
+          <td class="py-3 px-4 text-right font-bold text-emerald-700">Rp ${formatRupiah(a.biaya)}</td>
+          <td class="py-3 px-4 text-center">
+            <div class="flex items-center justify-center gap-1.5">
+              <button onclick="muatArsipKeForm(${idx})" title="Buka" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-[11px] font-bold transition shadow-sm">Buka</button>
+              <button onclick="hapusArsip(${idx})" title="Hapus" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded text-[11px] font-bold transition">Hapus</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
     function renderListMasterPegawai() {
@@ -1428,7 +1436,6 @@
       document.getElementById('input-user-username').value = "";
       document.getElementById('input-user-nama').value = "";
       document.getElementById('input-user-role').value = "pegawai";
-      document.getElementById('input-user-pass').value = "";
       document.getElementById('modal-user').classList.remove('hidden');
     }
 
@@ -1444,7 +1451,6 @@
       document.getElementById('input-user-username').value = u.username;
       document.getElementById('input-user-nama').value = u.nama;
       document.getElementById('input-user-role').value = u.role;
-      document.getElementById('input-user-pass').value = "";
       document.getElementById('modal-user').classList.remove('hidden');
     }
 
@@ -1818,7 +1824,6 @@
       renderLembarSpdBelakang();
       renderLembarKuitansi();
       renderLembarRincian();
-      updateDashboardStats();
     }
 
     function renderLembarSpd() {
@@ -1925,7 +1930,7 @@
               <td style="border: 1px solid #000; padding: 8px 12px; vertical-align: top;">
                 <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                   <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;" class="text-[12pt] no-border-table">
-                    <colgroup><col style="width: 22px;"><col style="width: 95px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
+                    <colgroup><col style="width: 22px;"><col style="width: 112px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
                     <tr><td style="vertical-align: top; padding: 2px 0;">I.</td><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Berangkat dari</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${state.spd.tempatBerangkat || 'Bangko'}</td></tr>
                     <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
                     <tr><td style="padding: 2px 0;"></td><td style="vertical-align: top; padding: 2px 0;">Ke</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
@@ -1935,10 +1940,10 @@
                     <p class="font-normal leading-tight text-[12pt]">${pptk.subJabatan || 'Selaku Pelaksana Teknis Kegiatan'}</p>
                     <div style="height: 45px;"></div>
                     <div class="flex flex-col items-center">
-                      <div style="width: 75%; text-align: center;">
+                      <div style="width: 80%; text-align: center;">
                         <div style="text-decoration: underline; font-weight: bold; font-size: 12.5pt; leading-tight;">${pptk.nama || 'SYORAYA, S.Pd'}</div>
                         <div style="font-size: 12pt; font-weight: bold; leading-tight;">${pptk.pangkat || 'Penata TK.I (III/D)'}</div>
-                        <div style="margin-top: 10px; width: 85%; margin-left: auto; margin-right: auto;">
+                        <div style="margin-top: 10px; width: 100%; margin-left: auto; margin-right: auto;">
                           <div style="border-bottom: 1px dashed #000; width: 100%;"></div>
                           <p style="font-size: 12pt; leading-tight; text-align: left; margin-top: 2px;">Nip.</p>
                         </div>
@@ -1953,16 +1958,16 @@
                 <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                   <div>
                     <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;" class="text-[12pt] no-border-table">
-                      <colgroup><col style="width: 22px;"><col style="width: 95px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
+                      <colgroup><col style="width: 22px;"><col style="width: 112px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
                       <tr><td style="vertical-align: top; padding: 2px 0;">II.</td><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Tiba di</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
                       <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
                     </table>
                   </div>
                   <div class="mb-3 flex flex-col items-center text-center">
                     <div style="height: 45px;"></div>
-                    <div style="width: 75%; margin-left: auto; margin-right: auto;">
+                    <div style="width: 80%; margin-left: auto; margin-right: auto;">
                       <div style="border-bottom: 1px dashed #000; width: 100%;"></div>
-                      <p style="font-size: 11.5pt; leading-tight; text-align: left; margin-top: 2px;">Nip.</p>
+                      <p style="font-size: 12pt; leading-tight; text-align: left; margin-top: 2px;">Nip.</p>
                     </div>
                   </div>
                 </div>
@@ -1971,16 +1976,16 @@
                 <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                   <div>
                     <table style="width: 100%; border-collapse: collapse; border: none; table-layout: fixed;" class="text-[12pt] no-border-table">
-                      <colgroup><col style="width: 22px;"><col style="width: 95px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
-                      <tr><td style="vertical-align: top; padding: 2px 0;"></td><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Berangkat dari</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
-                      <tr><td style="padding: 2px 0;"></td><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
+                      <colgroup><col style="width: 112px;"><col style="width: 14px;"><col style="width: auto;"></colgroup>
+                      <tr><td style="vertical-align: top; padding: 2px 0; white-space: nowrap;">Berangkat dari</td><td style="text-align: center; vertical-align: top; padding: 2px 0;">:</td><td style="vertical-align: top; padding: 2px 0;">${formatTempatTujuanHtml(state.spd.tempatTujuan)}</td></tr>
+                      <tr><td style="padding: 2px 0; white-space: nowrap;">Pada Tanggal</td><td style="text-align: center; padding: 2px 0;">:</td><td style="padding: 2px 0;">${tglPunggungFormatted}</td></tr>
                     </table>
                   </div>
                   <div class="mb-3 flex flex-col items-center text-center">
                     <div style="height: 45px;"></div>
-                    <div style="width: 75%; margin-left: auto; margin-right: auto;">
+                    <div style="width: 80%; margin-left: auto; margin-right: auto;">
                       <div style="border-bottom: 1px dashed #000; width: 100%;"></div>
-                      <p style="font-size: 11.5pt; leading-tight; text-align: left; margin-top: 2px;">Nip.</p>
+                      <p style="font-size: 12pt; leading-tight; text-align: left; margin-top: 2px;">Nip.</p>
                     </div>
                   </div>
                 </div>
@@ -2129,6 +2134,8 @@
       syncStateToFormInputs();
       await muatMasterCloud();
       gantiTabNav('dashboard');
+      updateLiveClock();
+      setInterval(updateLiveClock, 1000);
     };
   </script>
 </body>
